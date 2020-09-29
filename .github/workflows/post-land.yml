@@ -2,9 +2,13 @@
 name: Post-land Test
 
 on:
+  pull_request:
+    branches:
+      - master
   push:
     branches:
       - 'release**'
+      - canary
 
 jobs:
   run-cluster-test-pre-release-suite:
@@ -21,7 +25,8 @@ jobs:
           echo "::set-env name=HEAD_GIT_REV::$HEAD_GIT_REV"
           IMAGE_TAG=$(echo ${GITHUB_REF#refs/heads/})_$HEAD_GIT_REV
           echo $IMAGE_TAG
-          echo "::set-env name=IMAGE_TAG::$IMAGE_TAG"
+          #echo "::set-env name=IMAGE_TAG::$IMAGE_TAG"
+          echo "::set-env name=IMAGE_TAG::master_4dd70f72"
       - name: poll_images
         # Poll until images are ready
         env:
